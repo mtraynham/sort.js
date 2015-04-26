@@ -1,0 +1,17 @@
+{
+    "name": "sort.js",
+    "version": "0.0.1",
+    "main": "dist/sort.js",
+    "scripts": [
+        "dist/sort.js"
+    ],
+    "ignore": [
+        "**/.*",
+        "gulpfile.js",
+        "index.js",
+        "package.json",
+        "bench",
+        "lib",
+        "test"
+    ]
+}
