@@ -25,11 +25,12 @@ gulp.task('build', function () {
             entry: './index.js',
             output: {
                 filename: 'sort.js',
-                library: '_',
+                library: 'Sort',
                 libraryTarget: 'umd'
             },
             module: {
-                preLoaders: [{test: /\.js$/, loader: 'source-map-loader'}]
+                preLoaders: [{test: /\.js$/, loader: 'source-map-loader'}],
+                loaders: [{test: /\.js$/, loader: 'babel-loader'}]
             },
             devtool: 'source-map'
         }))
@@ -42,12 +43,15 @@ gulp.task('uglify', function () {
             entry: './index.js',
             output: {
                 filename: 'sort.min.js',
-                library: '_',
+                library: 'Sort',
                 libraryTarget: 'umd'
             },
             plugins: [
                 new webpack.optimize.UglifyJsPlugin()
-            ]
+            ],
+            module: {
+                loaders: [{test: /\.js$/, loader: 'babel-loader'}]
+            }
         }))
         .pipe(gulp.dest('dist/'));
 });

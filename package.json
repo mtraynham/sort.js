@@ -14,6 +14,7 @@
     },
     "main": "index.js",
     "devDependencies": {
+        "babel-loader": "~5.0.0",
         "gulp": "~3.8.11",
         "gulp-bench": "~1.1.0",
         "gulp-bump": "~0.3.0",
