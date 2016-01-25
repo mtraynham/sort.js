@@ -1,40 +1,57 @@
 {
     "name": "sort.js",
-    "version": "0.0.1",
     "description": "Sort algorithms for JavaScript",
-    "keywords": [
-        "sort"
-    ],
+    "version": "0.0.1",
     "author": {
-        "name": "Matt Traynham"
+        "name": "Matt Traynham",
+        "email": "skitch920@gmail.com"
     },
+    "keywords": [
+        "sorts"
+    ],
+    "bugs": {
+        "url": "https://github.com/mtraynham/sort.js/issues"
+    },
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/mtraynham/sort.js.git"
     },
-    "main": "index.js",
-    "devDependencies": {
-        "babel-loader": "~5.0.0",
-        "gulp": "~3.8.11",
-        "gulp-bench": "~1.1.0",
-        "gulp-bump": "~0.3.0",
-        "gulp-coveralls": "~0.1.3",
-        "gulp-istanbul": "~0.6.0",
-        "gulp-jscs": "~1.4.0",
-        "gulp-jshint": "~1.9.4",
-        "gulp-mocha": "~2.0.0",
-        "gulp-webpack": "~1.3.0",
-        "jshint-stylish": "~1.0.1",
-        "source-map-loader": "0.1.3",
-        "webpack": "~1.7.3"
-    },
-    "licenses": [
-        {
-            "type": "Apache v2",
-            "url": "https://github.com/mtraynham/lodash-joins/blob/master/LICENSE"
-        }
+    "files": [
+        "index.js",
+        "LICENSE",
+        "README.md",
+        "dist/",
+        "lib/"
     ],
+    "main": "dist/sort.js",
     "scripts": {
-        "test": "gulp test"
+        "test": "./node_modules/.bin/gulp coverage"
+    },
+    "devDependencies": {
+        "babel-core": "~6.4.5",
+        "babel-loader": "~6.2.1",
+        "babel-plugin-add-module-exports": "~0.1.2",
+        "babel-preset-es2015": "~6.3.13",
+        "chai": "~3.4.1",
+        "gulp": "~3.9.0",
+        "gulp-bench": "~1.1.0",
+        "gulp-bump": "~1.0.0",
+        "gulp-coveralls": "~0.1.4",
+        "gulp-istanbul": "~0.10.3",
+        "gulp-jscs": "~3.0.2",
+        "gulp-jshint": "~2.0.0",
+        "gulp-livereload": "~3.8.1",
+        "gulp-load-plugins": "~1.2.0",
+        "gulp-mocha": "~2.2.0",
+        "gulp-open": "~1.0.0",
+        "isparta": "~4.0.0",
+        "jshint": "~2.9.1",
+        "jshint-stylish": "~2.1.0",
+        "lodash": "~4.0.1",
+        "mocha": "~2.3.4",
+        "source-map-loader": "~0.1.5",
+        "webpack": "~1.12.12",
+        "webpack-stream": "~3.1.0"
     }
 }

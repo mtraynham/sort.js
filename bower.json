@@ -1,17 +1,32 @@
 {
     "name": "sort.js",
+    "description": "Sort algorithms for JavaScript",
     "version": "0.0.1",
-    "main": "dist/sort.js",
-    "scripts": [
-        "dist/sort.js"
+    "authors": [
+        {
+            "name": "Matt Traynham",
+            "email": "skitch920@gmail.com"
+        }
+    ],
+    "keywords": [
+        "sorts"
+    ],
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/mtraynham/sort.js.git"
+    },
+    "module": [
+        "globals",
+        "amd",
+        "node",
+        "es6"
     ],
     "ignore": [
-        "**/.*",
-        "gulpfile.js",
-        "index.js",
-        "package.json",
-        "bench",
-        "lib",
-        "test"
-    ]
+        "*",
+        "!dist/*",
+        "!LICENSE",
+        "!README.md"
+    ],
+    "main": "dist/sort.js"
 }
