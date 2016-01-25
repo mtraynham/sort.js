@@ -1,6 +1,9 @@
 import {assert} from 'chai';
+import quicksort from '../../lib/quicksort/quicksort';
 
 describe('Sort', () => {
-    it('should stub this method', () =>
-        assert.equal(0, 0));
+    let initial = ['a', 'c', 'b'],
+        expected = ['a', 'b', 'c'];
+    it('data should be sorted', () =>
+        assert.deepEqual(expected, quicksort(initial)));
 });
