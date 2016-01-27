@@ -6,18 +6,25 @@ import quicksortInplace from '../../lib/quicksort/quicksortInplace';
  * Generate a sort bench test.
  *
  * @param  {String} name
- * @param  {Number} size
+ * @param  {Array} array
+ * @param  {Function} [comparator]
  * @return {BenchmarkSuite}
  */
-export default function sortBench (name, size = 0) {
-    console.log(size);
-    let array = ['a', 'b', 'g', 'd', 'f', 'c'];
+export default function sortBench (name, array, comparator) {
+    let sorts = {
+        'Standard': (arr, comparator) => {
+            arr.sort(comparator);
+            return arr;
+        },
+        'Quicksort': quicksort,
+        'Quicksort (Functional)': quicksortFunctional,
+        'Quicksort (Inplace)': quicksortInplace
+    };
     return {
         name: name,
-        tests: {
-            'Quicksort': () => quicksort(array),
-            'Quicksort (Functional)': () => quicksortFunctional(array),
-            'Quicksort (Inplace)': () => quicksortInplace(array)
-        }
+        tests: Object.keys(sorts).reduce((acc, key) => {
+            acc[key] = () => sorts[key](array.slice(), comparator);
+            return acc;
+        }, {})
     };
 }
