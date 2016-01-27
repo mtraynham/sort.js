@@ -1,31 +1,44 @@
 import {assert} from 'chai';
 import Chance from 'chance';
-import quicksort from '../../lib/quicksort/quicksort';
-import quicksortFunctional from '../../lib/quicksort/quicksortFunctional';
-import quicksortInplace from '../../lib/quicksort/quicksortInplace';
-import {reverseComparator} from '../../lib/util/comparator';
+import * as Sort from '../../index';
+import {lexicographicComparator, reverse} from '../../lib/util/comparator';
 
-let chance = new Chance(),
-    sorts = {
-        'Quicksort': quicksort,
-        'Quicksort (Functional)': quicksortFunctional,
-        'Quicksort (Inplace)': quicksortInplace
-    },
-    sortTest = (array, comparator) => {
-        let expected = array.slice();
-        expected.sort(comparator);
-        Object.keys(sorts).forEach((key) =>
-            it(key, () => assert.deepEqual(expected, sorts[key](array.slice(), comparator))));
-    };
+let chance = new Chance();
 
-describe('Small Sort', () =>
-    sortTest(chance.n(chance.character, 5)));
+function sortTest (array, comparator) {
+    let expected = array.slice();
+    expected.sort(comparator);
+    Object.keys(Sort).forEach((key) =>
+        it(key, () => assert.deepEqual(Sort[key](array.slice(), comparator), expected)));
+}
 
-describe('Reverse Small Sort', () =>
-    sortTest(chance.n(chance.character, 5), reverseComparator));
+function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
+    describe(name, () => {
+        describe('Small Sort', () =>
+            sortTest(chance.n(chanceFn, 10)), comparator);
 
-describe('Large Sort', () =>
-    sortTest(chance.n(chance.character, 1000)));
+        describe('Reverse Small Sort', () =>
+            sortTest(chance.n(chanceFn, 10)), reverse(comparator));
 
-describe('Reverse Large Sort', () =>
-    sortTest(chance.n(chance.character, 1000), reverseComparator));
+        describe('Medium Sort', () =>
+            sortTest(chance.n(chanceFn, 100)), comparator);
+
+        describe('Reverse Medium Sort', () =>
+            sortTest(chance.n(chanceFn, 100)), reverse(comparator));
+
+        describe('Large Sort', () =>
+            sortTest(chance.n(chanceFn, 1000)), comparator);
+
+        describe('Large Medium Sort', () =>
+            sortTest(chance.n(chanceFn, 1000)), reverse(comparator));
+    });
+}
+
+typeSpec('Boolean Arrays', chance.bool);
+typeSpec('Character Arrays', chance.character);
+//typeSpec('Integer Arrays', chance.integer, numericComparator);
+//typeSpec('Float Arrays', chance.floating, numericComparator);
+//typeSpec('Natural Arrays', chance.natural, numericComparator);
+typeSpec('String Arrays', chance.string);
+typeSpec('Word Arrays', chance.word);
+

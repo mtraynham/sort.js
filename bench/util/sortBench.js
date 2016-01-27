@@ -1,6 +1,5 @@
-import quicksort from '../../lib/quicksort/quicksort';
-import quicksortFunctional from '../../lib/quicksort/quicksortFunctional';
-import quicksortInplace from '../../lib/quicksort/quicksortInplace';
+import merge from 'lodash/merge';
+import * as Sort from '../../index';
 
 /**
  * Generate a sort bench test.
@@ -11,15 +10,13 @@ import quicksortInplace from '../../lib/quicksort/quicksortInplace';
  * @return {BenchmarkSuite}
  */
 export default function sortBench (name, array, comparator) {
-    let sorts = {
-        'Standard': (arr, comparator) => {
+    let sorts = merge({
+        'Array.prototype.sort': (arr, comparator) => {
             arr.sort(comparator);
             return arr;
-        },
-        'Quicksort': quicksort,
-        'Quicksort (Functional)': quicksortFunctional,
-        'Quicksort (Inplace)': quicksortInplace
-    };
+        }
+    }, Sort);
+
     return {
         name: name,
         tests: Object.keys(sorts).reduce((acc, key) => {
