@@ -11,11 +11,11 @@ import * as Sort from '../../index';
  */
 export default function sortBench (name, array, comparator) {
     let sorts = merge({
-        'Array.prototype.sort': (arr, comparator) => {
-            arr.sort(comparator);
-            return arr;
-        }
-    }, Sort);
+            'Array.prototype.sort': (arr, comparator) => {
+                arr.sort(comparator);
+                return arr;
+            }
+        }, Sort);
 
     return {
         name: name,

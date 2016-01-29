@@ -1,7 +1,7 @@
 /*!
- *  sort.js - v0.0.1 - Mon Jan 25 2016 17:13:36 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Fri Jan 29 2016 00:25:24 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
- *  Copyright 2014-2016 Matt Traynham <skitch920@gmail.com>
+ *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -77,7 +77,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _quicksort = __webpack_require__(1);
+	var _insertionSort = __webpack_require__(1);
+	
+	Object.defineProperty(exports, 'insertionSort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_insertionSort).default;
+	  }
+	});
+	
+	var _mergeSort = __webpack_require__(3);
+	
+	Object.defineProperty(exports, 'mergeSort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_mergeSort).default;
+	  }
+	});
+	
+	var _quicksort = __webpack_require__(4);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -86,7 +104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(3);
+	var _quicksortFunctional = __webpack_require__(5);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -95,12 +113,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(4);
+	var _quicksortInplace = __webpack_require__(6);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_quicksortInplace).default;
+	  }
+	});
+	
+	var _selectionSort = __webpack_require__(8);
+	
+	Object.defineProperty(exports, 'selectionSort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_selectionSort).default;
 	  }
 	});
 
@@ -115,39 +142,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = insertionSort;
 	
 	var _comparator = __webpack_require__(2);
 	
-	var concat = Array.prototype.concat;
-	
 	/**
-	 * Returns a new array
+	 * Standard Insertion Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
 	 */
-	var quicksort = function quicksort(array) {
-	    var lessThan = arguments.length <= 1 || arguments[1] === undefined ? _comparator.defaultLessThan : arguments[1];
+	function insertionSort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
 	
-	    if (array.length <= 1) {
-	        return array;
-	    }
-	    var left = [],
-	        right = [],
-	        pivot = array[0],
-	        i = 1,
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        length = array.length,
-	        value = undefined;
-	
-	    for (i; i < length; i++) {
+	        value = undefined,
+	        i = undefined,
+	        j = undefined;
+	    for (i = 0; i < length; i++) {
 	        value = array[i];
-	        if (lessThan(value, pivot)) {
-	            left.push(value);
-	        } else {
-	            right.push(value);
+	        for (j = i - 1; j > -1 && lessThan(value, array[j]); j--) {
+	            array[j + 1] = array[j];
 	        }
+	        array[j + 1] = value;
 	    }
-	    return concat.call(quicksort(left), pivot, quicksort(right));
-	};
-	
-	exports.default = quicksort;
+	    return array;
+	}
 	module.exports = exports['default'];
 
 /***/ },
@@ -157,27 +178,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	var comparatorToLessThan = exports.comparatorToLessThan = function comparatorToLessThan(comparator) {
-	    return function (a, b) {
-	        return comparator(a, b) < 0;
-	    };
-	};
+	exports.comparatorToLessThan = comparatorToLessThan;
+	exports.lessThanToComparator = lessThanToComparator;
+	exports.reverse = reverse;
+	exports.lexicographicComparator = lexicographicComparator;
+	exports.numericComparator = numericComparator;
+	/**
+	 * Converts a comparator function to a lessThan function
+	 * @param {Function} comparator
+	 * @returns {Function}
+	 */
+	function comparatorToLessThan(comparator) {
+	  return function (a, b) {
+	    return comparator(a, b) < 0;
+	  };
+	}
 	
-	var lessThanToComparator = exports.lessThanToComparator = function lessThanToComparator(lessThan) {
-	    return function (a, b) {
-	        return lessThan(a, b) ? -1 : !lessThan(b, a) ? 0 : 1;
-	    };
-	};
+	/**
+	 * Converts a less than function to a comparator function
+	 * @param {Function} lessThan
+	 * @returns {Function}
+	 */
+	function lessThanToComparator(lessThan) {
+	  return function (a, b) {
+	    return lessThan(a, b) ? -1 : !lessThan(b, a) ? 0 : 1;
+	  };
+	}
 	
-	var defaultComparator = exports.defaultComparator = function defaultComparator(a, b) {
-	    return a < b ? -1 : a > b ? 1 : 0;
-	};
+	/**
+	 * Reverses the inputs of a bi-function
+	 * @param {Function} fn
+	 * @returns {Function}
+	 */
+	function reverse(fn) {
+	  return function (a, b) {
+	    return fn(b, a);
+	  };
+	}
 	
-	var defaultLessThan = exports.defaultLessThan = function defaultLessThan(a, b) {
-	    return a < b;
-	};
+	/**
+	 * A standard lexicographic comparator that returns a number:
+	 * less that 0 denoting less than,
+	 * equal to 0 denoting equals, and
+	 * greater than 0 denoting greater than
+	 * @param {*} a
+	 * @param {*} b
+	 * @returns {Number}
+	 */
+	function lexicographicComparator(a, b) {
+	  return a < b ? -1 : a > b ? 1 : 0;
+	}
+	
+	/**
+	 * A numeric comparator that returns the subtraction
+	 * of one number from another.
+	 * @param {Number} a
+	 * @param {Number} b
+	 * @returns {Number}
+	 */
+	function numericComparator(a, b) {
+	  return a - b;
+	}
 
 /***/ },
 /* 3 */
@@ -188,32 +251,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = mergeSort;
 	
 	var _comparator = __webpack_require__(2);
 	
-	var concat = Array.prototype.concat;
-	
 	/**
-	 * A functional programming implementation of quicksort.
-	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
+	 * Standard Merge Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
 	 */
-	var quicksortFunctional = function quicksortFunctional(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.defaultComparator : arguments[1];
+	function mergeSort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
 	
-	    if (array.length <= 1) {
-	        return array;
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
+	    function merge(left, right) {
+	        var result = [];
+	        while (left.length > 0 && right.length > 0) {
+	            result.push(lessThan(left[0], right[0]) ? left.shift() : right.shift());
+	        }
+	        return result.concat(left.length ? left : right);
 	    }
-	    var pivot = array[Math.round(array.length / 2)];
-	    return concat.call(quicksortFunctional(array.filter(function (x) {
-	        return comparator(x, pivot) < 0;
-	    })), array.filter(function (x) {
-	        return comparator(x, pivot) === 0;
-	    }), quicksortFunctional(array.filter(function (x) {
-	        return comparator(x, pivot) > 0;
-	    })));
-	};
 	
-	exports.default = quicksortFunctional;
+	    function _mergeSort(array) {
+	        if (array.length <= 1) {
+	            return array;
+	        }
+	        var mid = Math.floor(array.length / 2);
+	        return merge(_mergeSort(array.slice(0, mid)), _mergeSort(array.slice(mid)));
+	    }
+	
+	    return _mergeSort(array);
+	}
 	module.exports = exports['default'];
 
 /***/ },
@@ -225,20 +294,117 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = quicksort;
 	
-	var _arraySwap = __webpack_require__(5);
+	var _comparator = __webpack_require__(2);
+	
+	var concat = Array.prototype.concat;
+	
+	/**
+	 * Standard quicksort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function quicksort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
+	    function _quicksort(array) {
+	        if (array.length <= 1) {
+	            return array;
+	        }
+	        var left = [],
+	            right = [],
+	            index = 0,
+	            length = array.length,
+	            pivot = array[0],
+	            value = undefined;
+	
+	        while (++index < length) {
+	            value = array[index];
+	            if (lessThan(value, pivot)) {
+	                left.push(value);
+	            } else {
+	                right.push(value);
+	            }
+	        }
+	        return concat.call(_quicksort(left), pivot, _quicksort(right));
+	    }
+	    return _quicksort(array);
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = quicksortFunctional;
+	
+	var _comparator = __webpack_require__(2);
+	
+	var concat = Array.prototype.concat;
+	
+	/**
+	 * A functional programming implementation of quicksort.
+	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function quicksortFunctional(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    function quicksort(array) {
+	        if (array.length <= 1) {
+	            return array;
+	        }
+	        var pivot = array[Math.floor(array.length / 2)];
+	        return concat.call(quicksort(array.filter(function (x) {
+	            return comparator(x, pivot) < 0;
+	        })), array.filter(function (x) {
+	            return comparator(x, pivot) === 0;
+	        }), quicksort(array.filter(function (x) {
+	            return comparator(x, pivot) > 0;
+	        })));
+	    }
+	    return quicksort(array);
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = quicksortInplace;
+	
+	var _arraySwap = __webpack_require__(7);
 	
 	var _comparator = __webpack_require__(2);
 	
 	/**
 	 * An in-place quicksort
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
 	 */
-	var quicksortInplace = function quicksortInplace(array) {
-	    var lessThan = arguments.length <= 1 || arguments[1] === undefined ? _comparator.defaultLessThan : arguments[1];
+	function quicksortInplace(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
 	
-	    var arraySwap = (0, _arraySwap.arraySwapPartial)(array);
-	    var quicksort = function quicksort(left, right) {
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    function quicksort(left, right) {
 	        if (left < right) {
 	            var pivot = array[left + right >> 1],
 	                i = left,
@@ -257,15 +423,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            quicksort(left, j);
 	            quicksort(i, right);
 	        }
-	    };
+	    }
 	    quicksort(0, array.length - 1);
-	};
-	
-	exports.default = quicksortInplace;
+	    return array;
+	}
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -273,19 +438,79 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var arraySwap = exports.arraySwap = function arraySwap(array, i, j) {
+	exports.arraySwap = arraySwap;
+	exports.arraySwapPartial = arraySwapPartial;
+	/**
+	 * Given an array, swap the values at position i & j
+	 * @param {Array<*>} array
+	 * @param {Number} i
+	 * @param {Number} j
+	 */
+	function arraySwap(array, i, j) {
 	    var tmp = array[j];
 	    array[j] = array[i];
 	    array[i] = tmp;
-	};
+	}
 	
-	var arraySwapPartial = exports.arraySwapPartial = function arraySwapPartial(array) {
+	/**
+	 * Given an array, return a function that can swap the
+	 * values at i & j
+	 * @param {Array<*>} array
+	 * @returns {Function}
+	 */
+	function arraySwapPartial(array) {
 	    return function (i, j) {
 	        var tmp = array[j];
 	        array[j] = array[i];
 	        array[i] = tmp;
 	    };
-	};
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = selectionSort;
+	
+	var _arraySwap = __webpack_require__(7);
+	
+	var _comparator = __webpack_require__(2);
+	
+	/**
+	 * Standard Selection Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function selectionSort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
+	        length = array.length,
+	        min = undefined,
+	        i = undefined,
+	        j = undefined;
+	
+	    for (i = 0; i < length; i++) {
+	        min = i;
+	        for (j = i + 1; j < length; j++) {
+	            if (lessThan(array[j], array[min])) {
+	                min = j;
+	            }
+	        }
+	        if (i !== min) {
+	            arraySwap(i, min);
+	        }
+	    }
+	    return array;
+	}
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ])
