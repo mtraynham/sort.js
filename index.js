@@ -1,3 +1,5 @@
+export {default as bubbleSort} from './lib/bubbleSort/bubbleSort';
+export {default as heapSort} from './lib/heapSort/heapSort';
 export {default as insertionSort} from './lib/insertionSort/insertionSort';
 export {default as mergeSort} from './lib/mergeSort/mergeSort';
 export {default as quicksort} from './lib/quicksort/quicksort';

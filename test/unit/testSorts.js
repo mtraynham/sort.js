@@ -29,7 +29,7 @@ function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
         describe('Large Sort', () =>
             sortTest(chance.n(chanceFn, 1000)), comparator);
 
-        describe('Large Medium Sort', () =>
+        describe('Reverse Large Sort', () =>
             sortTest(chance.n(chanceFn, 1000)), reverse(comparator));
     });
 }

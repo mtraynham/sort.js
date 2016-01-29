@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Fri Jan 29 2016 00:25:24 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Fri Jan 29 2016 01:25:13 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -77,7 +77,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _insertionSort = __webpack_require__(1);
+	var _bubbleSort = __webpack_require__(1);
+	
+	Object.defineProperty(exports, 'bubbleSort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_bubbleSort).default;
+	  }
+	});
+	
+	var _heapSort = __webpack_require__(4);
+	
+	Object.defineProperty(exports, 'heapSort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_heapSort).default;
+	  }
+	});
+	
+	var _insertionSort = __webpack_require__(5);
 	
 	Object.defineProperty(exports, 'insertionSort', {
 	  enumerable: true,
@@ -86,7 +104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _mergeSort = __webpack_require__(3);
+	var _mergeSort = __webpack_require__(6);
 	
 	Object.defineProperty(exports, 'mergeSort', {
 	  enumerable: true,
@@ -95,7 +113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksort = __webpack_require__(4);
+	var _quicksort = __webpack_require__(7);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -104,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(5);
+	var _quicksortFunctional = __webpack_require__(8);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -113,7 +131,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(6);
+	var _quicksortInplace = __webpack_require__(9);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
@@ -122,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _selectionSort = __webpack_require__(8);
+	var _selectionSort = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
@@ -142,30 +160,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = insertionSort;
+	exports.default = bubbleSort;
 	
-	var _comparator = __webpack_require__(2);
+	var _arraySwap = __webpack_require__(2);
+	
+	var _comparator = __webpack_require__(3);
 	
 	/**
-	 * Standard Insertion Sort
+	 * Standard Bubble Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=lexicographicComparator]
 	 * @returns {Array<*>}
 	 */
-	function insertionSort(array) {
+	function bubbleSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
 	        length = array.length,
-	        value = undefined,
 	        i = undefined,
 	        j = undefined;
-	    for (i = 0; i < length; i++) {
-	        value = array[i];
-	        for (j = i - 1; j > -1 && lessThan(value, array[j]); j--) {
-	            array[j + 1] = array[j];
+	    for (i = length - 1; i >= 0; i--) {
+	        for (j = length - i; j >= 0; j--) {
+	            if (lessThan(array[j], array[j - 1])) {
+	                arraySwap(j, j - 1);
+	            }
 	        }
-	        array[j + 1] = value;
 	    }
 	    return array;
 	}
@@ -173,6 +193,43 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.arraySwap = arraySwap;
+	exports.arraySwapPartial = arraySwapPartial;
+	/**
+	 * Given an array, swap the values at position i & j
+	 * @param {Array<*>} array
+	 * @param {Number} i
+	 * @param {Number} j
+	 */
+	function arraySwap(array, i, j) {
+	    var tmp = array[j];
+	    array[j] = array[i];
+	    array[i] = tmp;
+	}
+	
+	/**
+	 * Given an array, return a function that can swap the
+	 * values at i & j
+	 * @param {Array<*>} array
+	 * @returns {Function}
+	 */
+	function arraySwapPartial(array) {
+	    return function (i, j) {
+	        var tmp = array[j];
+	        array[j] = array[i];
+	        array[i] = tmp;
+	    };
+	}
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -243,7 +300,100 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 3 */
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = heapSort;
+	
+	var _arraySwap = __webpack_require__(2);
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Standard Heap Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function heapSort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    function heapify(index, heapSize) {
+	        var largest = index,
+	            left = 2 * index + 1,
+	            right = left + 1;
+	        if (left < heapSize && lessThan(array[largest], array[left])) {
+	            largest = left;
+	        }
+	        if (right < heapSize && lessThan(array[largest], array[right])) {
+	            largest = right;
+	        }
+	        if (largest !== index) {
+	            arraySwap(index, largest);
+	            heapify(largest, heapSize);
+	        }
+	    }
+	    var length = array.length,
+	        i = Math.floor(length / 2);
+	    while (i--) {
+	        heapify(i, length);
+	    }
+	    i = length;
+	    while (i--) {
+	        arraySwap(0, i);
+	        heapify(0, i);
+	    }
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = insertionSort;
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Standard Insertion Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function insertionSort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        length = array.length,
+	        value = undefined,
+	        i = undefined,
+	        j = undefined;
+	    for (i = 0; i < length; i++) {
+	        value = array[i];
+	        for (j = i - 1; j > -1 && lessThan(value, array[j]); j--) {
+	            array[j + 1] = array[j];
+	        }
+	        array[j + 1] = value;
+	    }
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -253,7 +403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = mergeSort;
 	
-	var _comparator = __webpack_require__(2);
+	var _comparator = __webpack_require__(3);
 	
 	/**
 	 * Standard Merge Sort
@@ -286,7 +436,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -296,7 +446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = quicksort;
 	
-	var _comparator = __webpack_require__(2);
+	var _comparator = __webpack_require__(3);
 	
 	var concat = Array.prototype.concat;
 	
@@ -336,7 +486,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -346,7 +496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = quicksortFunctional;
 	
-	var _comparator = __webpack_require__(2);
+	var _comparator = __webpack_require__(3);
 	
 	var concat = Array.prototype.concat;
 	
@@ -378,7 +528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -388,9 +538,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = quicksortInplace;
 	
-	var _arraySwap = __webpack_require__(7);
+	var _arraySwap = __webpack_require__(2);
 	
-	var _comparator = __webpack_require__(2);
+	var _comparator = __webpack_require__(3);
 	
 	/**
 	 * An in-place quicksort
@@ -430,44 +580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.arraySwap = arraySwap;
-	exports.arraySwapPartial = arraySwapPartial;
-	/**
-	 * Given an array, swap the values at position i & j
-	 * @param {Array<*>} array
-	 * @param {Number} i
-	 * @param {Number} j
-	 */
-	function arraySwap(array, i, j) {
-	    var tmp = array[j];
-	    array[j] = array[i];
-	    array[i] = tmp;
-	}
-	
-	/**
-	 * Given an array, return a function that can swap the
-	 * values at i & j
-	 * @param {Array<*>} array
-	 * @returns {Function}
-	 */
-	function arraySwapPartial(array) {
-	    return function (i, j) {
-	        var tmp = array[j];
-	        array[j] = array[i];
-	        array[i] = tmp;
-	    };
-	}
-
-/***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -477,9 +590,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = selectionSort;
 	
-	var _arraySwap = __webpack_require__(7);
+	var _arraySwap = __webpack_require__(2);
 	
-	var _comparator = __webpack_require__(2);
+	var _comparator = __webpack_require__(3);
 	
 	/**
 	 * Standard Selection Sort
