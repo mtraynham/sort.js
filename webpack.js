@@ -50,9 +50,6 @@ export const uglify = merge({}, base, {
 });
 
 export const test = merge({}, base, {
-    externals: [{
-        'chai': 'chai'
-    }],
     output: {
         filename: 'test.js'
     }
