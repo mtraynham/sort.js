@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import Chance from 'chance';
 import * as Sort from '../../index';
-import {lexicographicComparator, reverse} from '../../lib/util/comparator';
+import {lexicographicComparator, numericComparator, reverse} from '../../lib/util/comparator';
 
 let chance = new Chance();
 
@@ -15,30 +15,30 @@ function sortTest (array, comparator) {
 function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
     describe(name, () => {
         describe('Small Sort', () =>
-            sortTest(chance.n(chanceFn, 10)), comparator);
+            sortTest(chance.n(chanceFn, 10), comparator));
 
         describe('Reverse Small Sort', () =>
-            sortTest(chance.n(chanceFn, 10)), reverse(comparator));
+            sortTest(chance.n(chanceFn, 10), reverse(comparator)));
 
         describe('Medium Sort', () =>
-            sortTest(chance.n(chanceFn, 100)), comparator);
+            sortTest(chance.n(chanceFn, 100), comparator));
 
         describe('Reverse Medium Sort', () =>
-            sortTest(chance.n(chanceFn, 100)), reverse(comparator));
+            sortTest(chance.n(chanceFn, 100), reverse(comparator)));
 
         describe('Large Sort', () =>
-            sortTest(chance.n(chanceFn, 1000)), comparator);
+            sortTest(chance.n(chanceFn, 1000), comparator));
 
         describe('Reverse Large Sort', () =>
-            sortTest(chance.n(chanceFn, 1000)), reverse(comparator));
+            sortTest(chance.n(chanceFn, 1000), reverse(comparator)));
     });
 }
 
 typeSpec('Boolean Arrays', chance.bool);
 typeSpec('Character Arrays', chance.character);
-//typeSpec('Integer Arrays', chance.integer, numericComparator);
-//typeSpec('Float Arrays', chance.floating, numericComparator);
-//typeSpec('Natural Arrays', chance.natural, numericComparator);
+typeSpec('Integer Arrays', chance.integer, numericComparator);
+typeSpec('Float Arrays', chance.floating, numericComparator);
+typeSpec('Natural Arrays', chance.natural, numericComparator);
 typeSpec('String Arrays', chance.string);
 typeSpec('Word Arrays', chance.word);
 
