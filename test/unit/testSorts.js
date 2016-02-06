@@ -26,14 +26,14 @@ function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
         describe('Reverse Medium Sort', () =>
             sortTest(chance.n(chanceFn, 100), reverse(comparator)));
 
-        describe('Large Sort', () => {
+        describe('Large Sort', function () {
             this.timeout(5000);
-            sortTest(chance.n(chanceFn, 1000), comparator);
+            return sortTest(chance.n(chanceFn, 1000), comparator);
         });
 
-        describe('Reverse Large Sort', () => {
+        describe('Reverse Large Sort', function () {
             this.timeout(5000);
-            sortTest(chance.n(chanceFn, 1000), reverse(comparator));
+            return sortTest(chance.n(chanceFn, 1000), reverse(comparator));
         });
     });
 }
