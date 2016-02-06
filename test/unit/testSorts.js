@@ -45,4 +45,3 @@ typeSpec('Float Arrays', chance.floating, numericComparator);
 typeSpec('Natural Arrays', chance.natural, numericComparator);
 typeSpec('String Arrays', chance.string);
 typeSpec('Word Arrays', chance.word);
-
