@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Sun Feb 07 2016 19:43:40 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Mon Feb 08 2016 08:32:18 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -122,7 +122,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksort = __webpack_require__(8);
+	var _mergeSortInplace = __webpack_require__(8);
+	
+	Object.defineProperty(exports, 'mergeSortInplace', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_mergeSortInplace).default;
+	  }
+	});
+	
+	var _quicksort = __webpack_require__(9);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -131,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(9);
+	var _quicksortFunctional = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -140,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(10);
+	var _quicksortInplace = __webpack_require__(11);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
@@ -149,7 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _selectionSort = __webpack_require__(11);
+	var _selectionSort = __webpack_require__(12);
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
@@ -528,6 +537,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = mergeSortInplace;
+	
+	var _arraySwap = __webpack_require__(2);
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Standard Merge Sort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function mergeSortInplace(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	
+	    function merge(min, max, mid) {
+	        var i = undefined,
+	            j = undefined;
+	        for (i = min; i < mid; i++) {
+	            if (lessThan(array[mid], array[i])) {
+	                arraySwap(i, mid);
+	                for (j = mid; j < max; j++) {
+	                    if (lessThan(array[j + 1], array[j])) {
+	                        arraySwap(j, j + 1);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	
+	    function _mergeSort(min, max) {
+	        var range = max - min;
+	        if (range === 0) {
+	            return;
+	        } else if (range === 1) {
+	            if (lessThan(array[max], array[min])) {
+	                arraySwap(min, max);
+	            }
+	        } else {
+	            var mid = Math.floor((min + max) / 2);
+	            _mergeSort(min, mid);
+	            _mergeSort(++mid, max);
+	            merge(min, max, mid);
+	        }
+	    }
+	    _mergeSort(0, array.length - 1);
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = quicksort;
 	
 	var _comparator = __webpack_require__(3);
@@ -570,7 +641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -612,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -664,7 +735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
