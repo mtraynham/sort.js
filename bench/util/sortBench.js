@@ -4,6 +4,7 @@ import * as Sort from '../../index';
 /**
  * Generate a sort bench test.
  *
+ * TODO Use Benchmark 2.0 (upgrade gulp-benchmark) to get setup scripts to work.
  * @param  {String} name
  * @param  {Array} array
  * @param  {Function} [comparator]
@@ -16,12 +17,21 @@ export default function sortBench (name, array, comparator) {
                 return arr;
             }
         }, Sort);
+    //setup = function () {
+    //    this.testArray = array.slice();
+    //};
 
     return {
         name: name,
-        tests: Object.keys(sorts).reduce((acc, key) => {
-            acc[key] = () => sorts[key](array.slice(), comparator);
-            return acc;
-        }, {})
+        tests: Object.keys(sorts).map(key => {
+            return {
+                name: key,
+                //setup: setup,
+                fn: function () {
+                    //return sorts[key](this.testArray, comparator);
+                    return sorts[key](array.slice(), comparator);
+                }
+            };
+        })
     };
 }

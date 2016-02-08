@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Sat Feb 06 2016 10:57:56 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Sun Feb 07 2016 19:43:40 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -86,7 +86,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _heapSort = __webpack_require__(4);
+	var _bubbleSortOptimized = __webpack_require__(4);
+	
+	Object.defineProperty(exports, 'bubbleSortOptimized', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_bubbleSortOptimized).default;
+	  }
+	});
+	
+	var _heapSort = __webpack_require__(5);
 	
 	Object.defineProperty(exports, 'heapSort', {
 	  enumerable: true,
@@ -95,7 +104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _insertionSort = __webpack_require__(5);
+	var _insertionSort = __webpack_require__(6);
 	
 	Object.defineProperty(exports, 'insertionSort', {
 	  enumerable: true,
@@ -104,7 +113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _mergeSort = __webpack_require__(6);
+	var _mergeSort = __webpack_require__(7);
 	
 	Object.defineProperty(exports, 'mergeSort', {
 	  enumerable: true,
@@ -113,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksort = __webpack_require__(7);
+	var _quicksort = __webpack_require__(8);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -122,7 +131,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(8);
+	var _quicksortFunctional = __webpack_require__(9);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -131,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(9);
+	var _quicksortInplace = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
@@ -140,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _selectionSort = __webpack_require__(10);
+	var _selectionSort = __webpack_require__(11);
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
@@ -168,6 +177,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/**
 	 * Standard Bubble Sort
+	 * Sometimes referred to as sinking sort, is a simple sorting algorithm that
+	 * repeatedly steps through the list to be sorted, compares each pair of adjacent
+	 * items and swaps them if they are in the wrong order. The pass through the list
+	 * is repeated until no swaps are needed, which indicates that the list is sorted.
+	 *
+	 * Bubble sort has worst-case and average complexity both О(n^2), where n is the
+	 * number of items being sorted.
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=lexicographicComparator]
 	 * @returns {Array<*>}
@@ -179,14 +195,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
 	        length = array.length,
 	        i = undefined,
-	        j = undefined;
-	    for (i = length - 1; i >= 0; i--) {
-	        for (j = length - i; j >= 0; j--) {
-	            if (lessThan(array[j], array[j - 1])) {
-	                arraySwap(j, j - 1);
+	        swapped = undefined;
+	    // Repeat (do-while) until no item is swapped, indicating a sorted array.
+	    do {
+	        swapped = false;
+	        // Step 1 to length initially, but length will be decremented til we
+	        // reach the lower end of the array as items will "sink" to
+	        // their positions and larger items will "bubble" to the top.
+	        for (i = 1; i < length; i++) {
+	            // If an item is less than it's lower position, move it down.
+	            if (lessThan(array[i], array[i - 1])) {
+	                arraySwap(i, i - 1);
+	                // Indicate that we'll need another iteration as a swap occurred.
+	                // Swap is a nice shortcut in the chance that no item needed to be moved,
+	                // thus the array is sorted.
+	                swapped = true;
 	            }
 	        }
-	    }
+	        // Decrementing our length will ignore items that have bubbled to the top.
+	        length--;
+	    } while (swapped);
 	    return array;
 	}
 	module.exports = exports['default'];
@@ -308,6 +336,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = bubbleSortOptimized;
+	
+	var _arraySwap = __webpack_require__(2);
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Optimized Bubble Sort
+	 * The bubble sort algorithm can be easily optimized by observing that the
+	 * n-th pass finds the n-th largest element and puts it into its final place.
+	 * So, the inner loop can avoid looking at the last n-1 items when running
+	 * for the n-th time
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function bubbleSortOptimized(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
+	        n = array.length,
+	        i = undefined,
+	        newN = undefined;
+	    do {
+	        // Instead of the swapped boolean flag, we can track the last n item that bubbled to the top.
+	        // Checking if n > 0 will suggest that some portion of the array was swapped
+	        // but also denote that it can be ignored in the next iteration of comparisons.
+	        newN = 0;
+	        for (i = 1; i < n; i++) {
+	            if (lessThan(array[i], array[i - 1])) {
+	                arraySwap(i, i - 1);
+	                newN = i;
+	            }
+	        }
+	        n = newN;
+	    } while (n !== 0);
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = heapSort;
 	
 	var _arraySwap = __webpack_require__(2);
@@ -325,6 +403,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	
+	    /**
+	     * Heapify the array
+	     * @param {Number} index
+	     * @param {Number} heapSize
+	     */
 	    function heapify(index, heapSize) {
 	        var largest = index,
 	            left = 2 * index + 1,
@@ -355,7 +439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -393,7 +477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -436,7 +520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -486,7 +570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -528,7 +612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -580,7 +664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
