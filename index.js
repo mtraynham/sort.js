@@ -4,6 +4,7 @@ export {default as heapSort} from './lib/heapSort/heapSort';
 export {default as insertionSort} from './lib/insertionSort/insertionSort';
 export {default as mergeSort} from './lib/mergeSort/mergeSort';
 export {default as mergeSortInplace} from './lib/mergeSort/mergeSortInplace';
+export {default as dualPivotQuicksort} from './lib/quicksort/dualPivotQuicksort';
 export {default as quicksort} from './lib/quicksort/quicksort';
 export {default as quicksortFunctional} from './lib/quicksort/quicksortFunctional';
 export {default as quicksortInplace} from './lib/quicksort/quicksortInplace';

@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Mon Feb 08 2016 08:32:18 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Sun Feb 14 2016 20:15:59 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -131,7 +131,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksort = __webpack_require__(9);
+	var _dualPivotQuicksort = __webpack_require__(9);
+	
+	Object.defineProperty(exports, 'dualPivotQuicksort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_dualPivotQuicksort).default;
+	  }
+	});
+	
+	var _quicksort = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -140,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(10);
+	var _quicksortFunctional = __webpack_require__(11);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -149,7 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(11);
+	var _quicksortInplace = __webpack_require__(12);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
@@ -158,7 +167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _selectionSort = __webpack_require__(12);
+	var _selectionSort = __webpack_require__(13);
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
@@ -601,6 +610,67 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = quicksort;
 	
+	var _arraySwap = __webpack_require__(2);
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Standard quicksort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function quicksort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    function dualPivotQuicksort(left, right) {
+	        if (left < right) {
+	            if (lessThan(array[right], array[left])) {
+	                arraySwap(left, right);
+	            }
+	            var pivot1 = array[left],
+	                pivot2 = array[right],
+	                l = left + 1,
+	                g = right - 1,
+	                k = l;
+	            for (k; k <= g; k++) {
+	                if (lessThan(array[k], pivot1)) {
+	                    arraySwap(k, l++);
+	                } else if (!lessThan(array[k], pivot2)) {
+	                    while (lessThan(pivot2, array[g]) && k < g) {
+	                        --g;
+	                    }
+	                    arraySwap(k, g--);
+	                    if (lessThan(array[k], pivot1)) {
+	                        arraySwap(k, l++);
+	                    }
+	                }
+	            }
+	            arraySwap(left, --l);
+	            arraySwap(right, ++g);
+	            dualPivotQuicksort(left, l - 1);
+	            dualPivotQuicksort(l + 1, g - 1);
+	            dualPivotQuicksort(g + 1, right);
+	        }
+	    }
+	    dualPivotQuicksort(0, array.length - 1);
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = quicksort;
+	
 	var _comparator = __webpack_require__(3);
 	
 	var concat = Array.prototype.concat;
@@ -641,7 +711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -683,7 +753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -735,7 +805,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
