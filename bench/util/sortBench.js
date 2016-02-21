@@ -8,7 +8,7 @@ import * as Sort from '../../index';
  * @param  {String} name
  * @param  {Array} array
  * @param  {Function} [comparator]
- * @return {BenchmarkSuite}
+ * @return {Benchmark.Suite}
  */
 export default function sortBench (name, array, comparator) {
     let sorts = merge({
@@ -17,20 +17,13 @@ export default function sortBench (name, array, comparator) {
                 return arr;
             }
         }, Sort);
-    //setup = function () {
-    //    this.testArray = array.slice();
-    //};
 
     return {
         name: name,
         tests: Object.keys(sorts).map(key => {
             return {
                 name: key,
-                //setup: setup,
-                fn: function () {
-                    //return sorts[key](this.testArray, comparator);
-                    return sorts[key](array.slice(), comparator);
-                }
+                fn: () => sorts[key](array.slice(), comparator)
             };
         })
     };
