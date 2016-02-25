@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Sun Feb 14 2016 20:15:59 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Wed Feb 24 2016 22:33:16 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -608,7 +608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = quicksort;
+	exports.default = dualPivotQuicksort;
 	
 	var _arraySwap = __webpack_require__(2);
 	
@@ -620,12 +620,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Function} [comparator=lexicographicComparator]
 	 * @returns {Array<*>}
 	 */
-	function quicksort(array) {
+	function dualPivotQuicksort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
-	    function dualPivotQuicksort(left, right) {
+	    function quicksort(left, right) {
 	        if (left < right) {
 	            if (lessThan(array[right], array[left])) {
 	                arraySwap(left, right);
@@ -650,12 +650,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            arraySwap(left, --l);
 	            arraySwap(right, ++g);
-	            dualPivotQuicksort(left, l - 1);
-	            dualPivotQuicksort(l + 1, g - 1);
-	            dualPivotQuicksort(g + 1, right);
+	            quicksort(left, l - 1);
+	            quicksort(l + 1, g - 1);
+	            quicksort(g + 1, right);
 	        }
 	    }
-	    dualPivotQuicksort(0, array.length - 1);
+	    quicksort(0, array.length - 1);
 	    return array;
 	}
 	module.exports = exports['default'];
