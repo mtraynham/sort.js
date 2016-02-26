@@ -40,8 +40,8 @@ function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
 
 typeSpec('Boolean Arrays', chance.bool);
 typeSpec('Character Arrays', chance.character);
-typeSpec('Integer Arrays', chance.integer, numericComparator);
-typeSpec('Float Arrays', chance.floating, numericComparator);
-typeSpec('Natural Arrays', chance.natural, numericComparator);
+typeSpec('Integer Arrays', chance.integer);
+typeSpec('Float Arrays', chance.floating);
+typeSpec('Natural Arrays', chance.natural);
 typeSpec('String Arrays', chance.string);
 typeSpec('Word Arrays', chance.word);

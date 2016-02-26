@@ -18,9 +18,9 @@
     "unused"        : true,
     "strict"        : false,
     "maxparams"     : 5,
-    "maxdepth"      : 4,
-    "maxstatements" : 30,
-    "maxcomplexity" : 10,
+    "maxdepth"      : 7,
+    "maxstatements" : 150,
+    "maxcomplexity" : 40,
     "maxlen"        : 140,
     "quotmark"      : "single",
 

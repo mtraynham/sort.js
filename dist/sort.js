@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Wed Feb 24 2016 22:33:16 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Fri Feb 26 2016 01:27:09 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -131,7 +131,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _dualPivotQuicksort = __webpack_require__(9);
+	var _dartDualPivotQuicksort = __webpack_require__(9);
+	
+	Object.defineProperty(exports, 'dartDualPivotQuicksort', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_dartDualPivotQuicksort).default;
+	  }
+	});
+	
+	var _dualPivotQuicksort = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'dualPivotQuicksort', {
 	  enumerable: true,
@@ -140,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksort = __webpack_require__(10);
+	var _quicksort = __webpack_require__(11);
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
@@ -149,7 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortFunctional = __webpack_require__(11);
+	var _quicksortFunctional = __webpack_require__(12);
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
@@ -158,7 +167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _quicksortInplace = __webpack_require__(12);
+	var _quicksortInplace = __webpack_require__(13);
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
@@ -167,7 +176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _selectionSort = __webpack_require__(13);
+	var _selectionSort = __webpack_require__(14);
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
@@ -608,6 +617,236 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = dartDualPivotQuicksort;
+	
+	var _comparator = __webpack_require__(3);
+	
+	/**
+	 * Simple Dual Pivot quicksort
+	 * @param {Array<*>} array
+	 * @param {Function} [comparator=lexicographicComparator]
+	 * @returns {Array<*>}
+	 */
+	function dartDualPivotQuicksort(array) {
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	
+	    function quicksort(left, right) {
+	        if (right - left < 0) {
+	            return;
+	        }
+	
+	        var sixth = (right - left + 1) / 6 | 0,
+	            index1 = left + sixth,
+	            index5 = right - sixth,
+	            index3 = left + right >> 1,
+	            index2 = index3 - sixth,
+	            index4 = index3 + sixth;
+	
+	        var el1 = array[index1],
+	            el2 = array[index2],
+	            el3 = array[index3],
+	            el4 = array[index4],
+	            el5 = array[index5];
+	
+	        if (comparator(el1, el2) > 0) {
+	            var _ref = [el2, el1];
+	            el1 = _ref[0];
+	            el2 = _ref[1];
+	        }
+	        if (comparator(el4, el5) > 0) {
+	            var _ref2 = [el4, el5];
+	            el4 = _ref2[0];
+	            el5 = _ref2[1];
+	        }
+	        if (comparator(el1, el3) > 0) {
+	            var _ref3 = [el3, el1];
+	            el1 = _ref3[0];
+	            el3 = _ref3[1];
+	        }
+	        if (comparator(el2, el3) > 0) {
+	            var _ref4 = [el3, el2];
+	            el2 = _ref4[0];
+	            el3 = _ref4[1];
+	        }
+	        if (comparator(el1, el4) > 0) {
+	            var _ref5 = [el4, el1];
+	            el1 = _ref5[0];
+	            el4 = _ref5[1];
+	        }
+	        if (comparator(el3, el4) > 0) {
+	            var _ref6 = [el4, el3];
+	            el3 = _ref6[0];
+	            el4 = _ref6[1];
+	        }
+	        if (comparator(el2, el5) > 0) {
+	            var _ref7 = [el5, el2];
+	            el2 = _ref7[0];
+	            el5 = _ref7[1];
+	        }
+	        if (comparator(el2, el3) > 0) {
+	            var _ref8 = [el3, el2];
+	            el2 = _ref8[0];
+	            el3 = _ref8[1];
+	        }
+	        if (comparator(el4, el5) > 0) {
+	            var _ref9 = [el5, el4];
+	            el4 = _ref9[0];
+	            el5 = _ref9[1];
+	        }
+	
+	        var pivot1 = el2,
+	            pivot2 = el4;
+	
+	        array[index1] = el1;
+	        array[index3] = el3;
+	        array[index5] = el5;
+	
+	        array[index2] = array[left];
+	        array[index4] = array[right];
+	
+	        var less = left + 1,
+	            great = right - 1;
+	
+	        var pivotsEqual = comparator(pivot1, pivot2) === 0;
+	        if (pivotsEqual) {
+	            var pivot = pivot1;
+	            for (var k = less; k <= great; ++k) {
+	                var ak = array[k],
+	                    comp = comparator(ak, pivot);
+	                if (comp < 0) {
+	                    if (k !== less) {
+	                        array[k] = array[less];
+	                        array[less] = ak;
+	                    }
+	                    less++;
+	                } else if (comp > 0) {
+	                    while (true) {
+	                        comp = comparator(array[great], pivot);
+	                        if (comp > 0) {
+	                            great--;
+	                        } else if (comp < 0) {
+	                            array[k] = array[less];
+	                            array[less++] = array[great];
+	                            array[great--] = ak;
+	                            break;
+	                        } else {
+	                            array[k] = array[great];
+	                            array[great--] = ak;
+	                            break;
+	                        }
+	                    }
+	                }
+	            }
+	        } else {
+	            for (var k = less; k <= great; k++) {
+	                var ak = array[k],
+	                    compPivot1 = comparator(ak, pivot1);
+	                if (compPivot1 < 0) {
+	                    if (k !== less) {
+	                        array[k] = array[less];
+	                        array[less] = ak;
+	                    }
+	                    less++;
+	                } else {
+	                    var compPivot2 = comparator(ak, pivot2);
+	                    if (compPivot2 > 0) {
+	                        while (true) {
+	                            var comp = comparator(array[great], pivot2);
+	                            if (comp > 0) {
+	                                great--;
+	                                if (great < k) {
+	                                    break;
+	                                }
+	                            } else {
+	                                comp = comparator(array[great], pivot1);
+	                                if (comp < 0) {
+	                                    array[k] = array[less];
+	                                    array[less++] = array[great];
+	                                    array[great--] = ak;
+	                                } else {
+	                                    array[k] = array[great];
+	                                    array[great--] = ak;
+	                                }
+	                                break;
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	
+	        array[left] = array[less - 1];
+	        array[less - 1] = pivot1;
+	        array[right] = array[great + 1];
+	        array[great + 1] = pivot2;
+	
+	        quicksort(left, less - 2);
+	        quicksort(great + 2, right);
+	
+	        if (pivotsEqual) {
+	            return;
+	        }
+	
+	        if (less < index1 && great > index5) {
+	            while (comparator(array[less], pivot1) === 0) {
+	                less++;
+	            }
+	            while (comparator(array[great], pivot2) === 0) {
+	                great--;
+	            }
+	
+	            for (var k = less; k <= great; k++) {
+	                var ak = array[k],
+	                    compPivot1 = comparator(ak, pivot1);
+	                if (compPivot1 === 0) {
+	                    if (k !== less) {
+	                        array[k] = array[less];
+	                        array[less] = ak;
+	                    }
+	                    less++;
+	                } else {
+	                    var compPivot2 = comparator(ak, pivot2);
+	                    if (compPivot2 === 0) {
+	                        while (true) {
+	                            var comp = comparator(array[great], pivot2);
+	                            if (comp === 0) {
+	                                great--;
+	                                if (great < k) {
+	                                    break;
+	                                }
+	                            } else {
+	                                comp = comparator(array[great], pivot1);
+	                                if (comp < 0) {
+	                                    array[k] = array[less];
+	                                    array[less++] = array[great];
+	                                    array[great--] = ak;
+	                                } else {
+	                                    array[k] = array[great];
+	                                    array[great--] = ak;
+	                                }
+	                                break;
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        quicksort(less, great);
+	    }
+	    quicksort(0, array.length - 1);
+	    return array;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = dualPivotQuicksort;
 	
 	var _arraySwap = __webpack_require__(2);
@@ -661,7 +900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -711,7 +950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -753,7 +992,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -805,7 +1044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
