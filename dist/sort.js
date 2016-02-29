@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Sun Feb 28 2016 21:53:07 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Sun Feb 28 2016 22:52:35 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -212,11 +212,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Bubble sort has worst-case and average complexity both О(n^2), where n is the
 	 * number of items being sorted.
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function bubbleSort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
@@ -295,7 +295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.comparatorToLessThan = comparatorToLessThan;
 	exports.lessThanToComparator = lessThanToComparator;
 	exports.reverse = reverse;
-	exports.lexicographicComparator = lexicographicComparator;
+	exports.naturalComparator = naturalComparator;
 	exports.numericComparator = numericComparator;
 	/**
 	 * Converts a comparator function to a lessThan function
@@ -331,7 +331,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	/**
-	 * A standard lexicographic comparator that returns a number:
+	 * A standard natural comparator that returns a number:
 	 * less that 0 denoting less than,
 	 * equal to 0 denoting equals, and
 	 * greater than 0 denoting greater than
@@ -339,7 +339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {*} b
 	 * @returns {Number}
 	 */
-	function lexicographicComparator(a, b) {
+	function naturalComparator(a, b) {
 	  return a < b ? -1 : a > b ? 1 : 0;
 	}
 	
@@ -376,11 +376,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * So, the inner loop can avoid looking at the last n-1 items when running
 	 * for the n-th time
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function bubbleSortOptimized(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
@@ -422,11 +422,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard Heap Sort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function heapSort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
@@ -481,11 +481,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard Insertion Sort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function insertionSort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        length = array.length,
@@ -519,11 +519,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard Merge Sort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function mergeSort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
 	    function merge(left, right) {
@@ -564,11 +564,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard Merge Sort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function mergeSortInplace(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
@@ -627,11 +627,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Ported from:
 	 * https://android.googlesource.com/platform/libcore/+/android-6.0.1_r16/luni/src/main/java/java/util/DualPivotQuicksort.java
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function sortingNetworkDualPivotQuicksort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	
 	    var INSERTION_SORT_THRESHOLD = 32;
@@ -846,11 +846,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard quicksort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function dualPivotQuicksort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
@@ -907,11 +907,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard quicksort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function quicksort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
 	    function _quicksort(array) {
@@ -958,11 +958,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * A functional programming implementation of quicksort.
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function quicksortFunctional(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    function quicksort(array) {
 	        if (array.length <= 1) {
@@ -1000,11 +1000,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * An in-place quicksort
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function quicksortInplace(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
@@ -1051,11 +1051,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Standard Selection Sort
 	 * @param {Array<*>} array
-	 * @param {Function} [comparator=lexicographicComparator]
+	 * @param {Function} [comparator=naturalComparator]
 	 * @returns {Array<*>}
 	 */
 	function selectionSort(array) {
-	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.lexicographicComparator : arguments[1];
+	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),

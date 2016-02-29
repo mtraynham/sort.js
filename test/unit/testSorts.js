@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import Chance from 'chance';
 import * as Sort from '../../index';
-import {lexicographicComparator, reverse} from '../../lib/util/comparator';
+import {naturalComparator, reverse} from '../../lib/util/comparator';
 
 let chance = new Chance();
 
@@ -12,7 +12,7 @@ function sortTest (array, comparator) {
         it(key, () => assert.deepEqual(Sort[key](array.slice(), comparator), expected)));
 }
 
-function typeSpec (name, chanceFn, comparator = lexicographicComparator) {
+function typeSpec (name, chanceFn, comparator = naturalComparator) {
     describe(name, () => {
         describe('Small Sort', () =>
             sortTest(chance.n(chanceFn, 10), comparator));
