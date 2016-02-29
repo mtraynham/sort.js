@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import Chance from 'chance';
 import * as Sort from '../../index';
-import {lexicographicComparator, numericComparator, reverse} from '../../lib/util/comparator';
+import {lexicographicComparator, reverse} from '../../lib/util/comparator';
 
 let chance = new Chance();
 
