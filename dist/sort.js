@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Sun Feb 28 2016 22:52:35 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Mon Feb 29 2016 20:04:50 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'bubbleSort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_bubbleSort).default;
 	  }
 	});
@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'bubbleSortOptimized', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_bubbleSortOptimized).default;
 	  }
 	});
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'heapSort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_heapSort).default;
 	  }
 	});
@@ -108,7 +108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'insertionSort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_insertionSort).default;
 	  }
 	});
@@ -117,7 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'mergeSort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_mergeSort).default;
 	  }
 	});
@@ -126,7 +126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'mergeSortInplace', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_mergeSortInplace).default;
 	  }
 	});
@@ -135,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'sortingNetworkDualPivotQuicksort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_sortingNetworkDualPivotQuicksort).default;
 	  }
 	});
@@ -144,7 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'dualPivotQuicksort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_dualPivotQuicksort).default;
 	  }
 	});
@@ -153,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_quicksort).default;
 	  }
 	});
@@ -162,7 +162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_quicksortFunctional).default;
 	  }
 	});
@@ -171,7 +171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_quicksortInplace).default;
 	  }
 	});
@@ -180,7 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
-	  get: function get() {
+	  get: function () {
 	    return _interopRequireDefault(_selectionSort).default;
 	  }
 	});
