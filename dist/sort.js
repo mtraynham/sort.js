@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Thu Mar 03 2016 20:39:55 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Tue Mar 08 2016 20:27:20 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -213,7 +213,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * number of items being sorted.
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function bubbleSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
@@ -262,6 +262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Array<*>} array
 	 * @param {Number} i
 	 * @param {Number} j
+	 * @return {undefined}
 	 */
 	function arraySwap(array, i, j) {
 	    var tmp = array[j];
@@ -273,7 +274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Given an array, return a function that can swap the
 	 * values at i & j
 	 * @param {Array<*>} array
-	 * @returns {Function}
+	 * @return {Function}
 	 */
 	function arraySwapPartial(array) {
 	    return function (i, j) {
@@ -300,7 +301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Converts a comparator function to a lessThan function
 	 * @param {Function} comparator
-	 * @returns {Function}
+	 * @return {Function}
 	 */
 	function comparatorToLessThan(comparator) {
 	  return function (a, b) {
@@ -311,18 +312,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Converts a less than function to a comparator function
 	 * @param {Function} lessThan
-	 * @returns {Function}
+	 * @return {Function}
 	 */
 	function lessThanToComparator(lessThan) {
 	  return function (a, b) {
-	    return lessThan(a, b) ? -1 : !lessThan(b, a) ? 0 : 1;
+	    return lessThan(a, b) ? -1 : lessThan(b, a) ? 1 : 0;
 	  };
 	}
 	
 	/**
 	 * Reverses the inputs of a bi-function
 	 * @param {Function} fn
-	 * @returns {Function}
+	 * @return {Function}
 	 */
 	function reverse(fn) {
 	  return function (a, b) {
@@ -337,7 +338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * greater than 0 denoting greater than
 	 * @param {*} a
 	 * @param {*} b
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	function naturalComparator(a, b) {
 	  return a < b ? -1 : a > b ? 1 : 0;
@@ -348,7 +349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * of one number from another.
 	 * @param {Number} a
 	 * @param {Number} b
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	function numericComparator(a, b) {
 	  return a - b;
@@ -377,7 +378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * for the n-th time
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function bubbleSortOptimized(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
@@ -423,7 +424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard Heap Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function heapSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
@@ -435,6 +436,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Heapify the array
 	     * @param {Number} index
 	     * @param {Number} heapSize
+	     * @return {undefined}
 	     */
 	    function heapify(index, heapSize) {
 	        var largest = index,
@@ -482,7 +484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard Insertion Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function insertionSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
@@ -520,12 +522,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard Merge Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function mergeSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
+	    /**
+	     * Merge
+	     * @param {Number} left
+	     * @param {Number} right
+	     * @return {undefined}
+	     */
 	    function merge(left, right) {
 	        var result = [];
 	        while (left.length > 0 && right.length > 0) {
@@ -534,6 +542,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return result.concat(left.length ? left : right);
 	    }
 	
+	    /**
+	     * Merge
+	     * @param {Array<*>} array
+	     * @return {Array<*>}
+	     */
 	    function _mergeSort(array) {
 	        if (array.length <= 1) {
 	            return array;
@@ -565,7 +578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard Merge Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function mergeSortInplace(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
@@ -573,6 +586,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
 	
+	    /**
+	     * Merge
+	     * @param {Number} min
+	     * @param {Number} max
+	     * @param {Number} mid
+	     * @return {undefined}
+	     */
 	    function merge(min, max, mid) {
 	        var i = undefined,
 	            j = undefined;
@@ -588,6 +608,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	
+	    /**
+	     * Merge Sort
+	     * @param {Number} min
+	     * @param {Number} max
+	     * @return {undefined}
+	     */
 	    function _mergeSort(min, max) {
 	        var range = max - min;
 	        if (range === 0) {
@@ -625,17 +651,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Sorting Network Dual Pivot Quicksort (with an Insertion Sort for arrays
 	 * less than 32 items long)
 	 * Ported from:
-	 * https://android.googlesource.com/platform/libcore/+/android-6.0.1_r16/luni/src/main/java/java/util/DualPivotQuicksort.java
+	 * @link https://android.googlesource.com/platform/libcore/+/android-6.0.1_r16/luni/src/main/java/java/util/DualPivotQuicksort.java
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function sortingNetworkDualPivotQuicksort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
-	
 	    var INSERTION_SORT_THRESHOLD = 32;
-	
+	    /**
+	     * Simple insertion sort
+	     * @param {Number} left
+	     * @param {Number} right
+	     * @return {undefined}
+	     */
 	    function insertionSort(left, right) {
 	        for (var i = left + 1; i <= right; i++) {
 	            var el = array[i],
@@ -648,6 +678,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	
+	    /**
+	     * Dual pivot quicksort with sorting network
+	     * @param {Number} left
+	     * @param {Number} right
+	     * @return {undefined}
+	     */
 	    function quicksort(left, right) {
 	        if (right - left < INSERTION_SORT_THRESHOLD) {
 	            insertionSort(left, right);
@@ -847,13 +883,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard quicksort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function dualPivotQuicksort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    /**
+	     * Dual Pivot Quicksort
+	     * @param {Number} left
+	     * @param {Number} right
+	     * @return {undefined}
+	     */
 	    function quicksort(left, right) {
 	        if (left < right) {
 	            if (lessThan(array[right], array[left])) {
@@ -908,12 +950,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard quicksort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function quicksort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
+	    /**
+	     * Simple standard quicksort
+	     * @param {Array<*>} array
+	     * @return {Array<*>}
+	     */
 	    function _quicksort(array) {
 	        if (array.length <= 1) {
 	            return array;
@@ -959,11 +1006,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function quicksortFunctional(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
+	    /**
+	     * Simple functional quicksort
+	     * @param {Array<*>} array
+	     * @return {Array<*>}
+	     */
 	    function quicksort(array) {
 	        if (array.length <= 1) {
 	            return array;
@@ -1001,13 +1053,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#JavaScript
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function quicksortInplace(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    /**
+	     * Simple in place quicksort
+	     * @param {Number} left
+	     * @param {Number} right
+	     * @return {undefined}
+	     */
 	    function quicksort(left, right) {
 	        if (left < right) {
 	            var pivot = array[left + right >> 1],
@@ -1052,7 +1110,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Standard Selection Sort
 	 * @param {Array<*>} array
 	 * @param {Function} [comparator=naturalComparator]
-	 * @returns {Array<*>}
+	 * @return {Array<*>}
 	 */
 	function selectionSort(array) {
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];

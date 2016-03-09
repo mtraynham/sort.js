@@ -5,13 +5,26 @@ import {naturalComparator, reverse} from '../../lib/util/comparator';
 
 let chance = new Chance();
 
+/**
+ * Run all sorts on a given array with a comparator
+ * @param {Array<*>} array
+ * @param {Function} comparator
+ * @return {undefined}
+ */
 function sortTest (array, comparator) {
     let expected = array.slice();
     expected.sort(comparator);
-    Object.keys(Sort).forEach((key) =>
+    Object.keys(Sort).forEach(key =>
         it(key, () => assert.deepEqual(Sort[key](array.slice(), comparator), expected)));
 }
 
+/**
+ * Create a suite of tests given a chance function
+ * @param {String} name
+ * @param {Function} chanceFn
+ * @param {Function} comparator
+ * @return {undefined}
+ */
 function typeSpec (name, chanceFn, comparator = naturalComparator) {
     describe(name, () => {
         describe('Small Sort', () =>
