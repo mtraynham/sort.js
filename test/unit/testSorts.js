@@ -3,7 +3,7 @@ import Chance from 'chance';
 import * as Sort from '../../index';
 import {naturalComparator, reverse} from '../../lib/util/comparator';
 
-let chance = new Chance();
+const chance = new Chance();
 
 /**
  * Run all sorts on a given array with a comparator
@@ -12,7 +12,7 @@ let chance = new Chance();
  * @return {undefined}
  */
 function sortTest (array, comparator) {
-    let expected = array.slice();
+    const expected = array.slice();
     expected.sort(comparator);
     Object.keys(Sort).forEach(key =>
         it(key, () => assert.deepEqual(Sort[key](array.slice(), comparator), expected)));

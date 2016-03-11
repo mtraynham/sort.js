@@ -7,7 +7,7 @@ import {resolve} from 'path';
 import {optimize, BannerPlugin} from 'webpack';
 
 const banner = template(readFileSync(resolve(__dirname, 'LICENSE_BANNER'), 'utf8'))({
-    pkg: pkg,
+    pkg,
     date: new Date()
 });
 

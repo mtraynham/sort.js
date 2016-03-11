@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Tue Mar 08 2016 20:27:20 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Thu Mar 10 2016 21:49:33 GMT-0500 (EST)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -219,8 +219,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
-	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
-	        length = array.length,
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    var length = array.length,
 	        i = undefined,
 	        swapped = undefined;
 	    // Repeat (do-while) until no item is swapped, indicating a sorted array.
@@ -384,8 +384,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
-	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
-	        n = array.length,
+	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
+	    var n = array.length,
 	        i = undefined,
 	        newN = undefined;
 	    do {
@@ -439,9 +439,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {undefined}
 	     */
 	    function heapify(index, heapSize) {
-	        var largest = index,
-	            left = 2 * index + 1,
+	        var left = 2 * index + 1,
 	            right = left + 1;
+	        var largest = index;
 	        if (left < heapSize && lessThan(array[largest], array[left])) {
 	            largest = left;
 	        }
@@ -453,8 +453,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            heapify(largest, heapSize);
 	        }
 	    }
-	    var length = array.length,
-	        i = Math.floor(length / 2);
+	    var length = array.length;
+	    var i = Math.floor(length / 2);
 	    while (i--) {
 	        heapify(i, length);
 	    }
@@ -490,12 +490,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var comparator = arguments.length <= 1 || arguments[1] === undefined ? _comparator.naturalComparator : arguments[1];
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
-	        length = array.length,
-	        value = undefined,
-	        i = undefined,
+	        length = array.length;
+	    var i = undefined,
 	        j = undefined;
 	    for (i = 0; i < length; i++) {
-	        value = array[i];
+	        var value = array[i];
 	        for (j = i - 1; j > -1 && lessThan(value, array[j]); j--) {
 	            array[j + 1] = array[j];
 	        }
@@ -530,9 +529,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
 	    /**
 	     * Merge
-	     * @param {Number} left
-	     * @param {Number} right
-	     * @return {undefined}
+	     * @param {Array<*>} left
+	     * @param {Array<*>} right
+	     * @return {Array<*>}
 	     */
 	    function merge(left, right) {
 	        var result = [];
@@ -544,15 +543,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    /**
 	     * Merge
-	     * @param {Array<*>} array
+	     * @param {Array<*>} mergeArray
 	     * @return {Array<*>}
 	     */
-	    function _mergeSort(array) {
-	        if (array.length <= 1) {
-	            return array;
+	    function _mergeSort(mergeArray) {
+	        if (mergeArray.length <= 1) {
+	            return mergeArray;
 	        }
-	        var mid = Math.floor(array.length / 2);
-	        return merge(_mergeSort(array.slice(0, mid)), _mergeSort(array.slice(mid)));
+	        var mid = Math.floor(mergeArray.length / 2);
+	        return merge(_mergeSort(mergeArray.slice(0, mid)), _mergeSort(mergeArray.slice(mid)));
 	    }
 	
 	    return _mergeSort(array);
@@ -668,8 +667,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function insertionSort(left, right) {
 	        for (var i = left + 1; i <= right; i++) {
-	            var el = array[i],
-	                j = i;
+	            var el = array[i];
+	            var j = i;
 	            while (j > left && comparator(array[j - 1], el) > 0) {
 	                array[j] = array[j - 1];
 	                j--;
@@ -902,8 +901,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                arraySwap(left, right);
 	            }
 	            var pivot1 = array[left],
-	                pivot2 = array[right],
-	                l = left + 1,
+	                pivot2 = array[right];
+	            var l = left + 1,
 	                g = right - 1,
 	                k = l;
 	            for (k; k <= g; k++) {
@@ -958,22 +957,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator);
 	    /**
 	     * Simple standard quicksort
-	     * @param {Array<*>} array
+	     * @param {Array<*>} quicksortArray
 	     * @return {Array<*>}
 	     */
-	    function _quicksort(array) {
-	        if (array.length <= 1) {
-	            return array;
+	    function _quicksort(quicksortArray) {
+	        if (quicksortArray.length <= 1) {
+	            return quicksortArray;
 	        }
 	        var left = [],
 	            right = [],
-	            index = 0,
-	            length = array.length,
-	            pivot = array[0],
-	            value = undefined;
+	            length = quicksortArray.length,
+	            pivot = quicksortArray[0];
+	        var index = 0;
 	
 	        while (++index < length) {
-	            value = array[index];
+	            var value = quicksortArray[index];
 	            if (lessThan(value, pivot)) {
 	                left.push(value);
 	            } else {
@@ -1016,16 +1014,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Array<*>} array
 	     * @return {Array<*>}
 	     */
-	    function quicksort(array) {
-	        if (array.length <= 1) {
-	            return array;
+	    function quicksort(quicksortArray) {
+	        if (quicksortArray.length <= 1) {
+	            return quicksortArray;
 	        }
-	        var pivot = array[Math.floor(array.length / 2)];
-	        return concat.call(quicksort(array.filter(function (x) {
+	        var pivot = quicksortArray[Math.floor(quicksortArray.length / 2)];
+	        return concat.call(quicksort(quicksortArray.filter(function (x) {
 	            return comparator(x, pivot) < 0;
-	        })), array.filter(function (x) {
+	        })), quicksortArray.filter(function (x) {
 	            return comparator(x, pivot) === 0;
-	        }), quicksort(array.filter(function (x) {
+	        }), quicksort(quicksortArray.filter(function (x) {
 	            return comparator(x, pivot) > 0;
 	        })));
 	    }
@@ -1068,8 +1066,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function quicksort(left, right) {
 	        if (left < right) {
-	            var pivot = array[left + right >> 1],
-	                i = left,
+	            var pivot = array[left + right >> 1];
+	            var i = left,
 	                j = right;
 	            do {
 	                while (lessThan(array[i], pivot)) {
@@ -1117,8 +1115,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
-	        length = array.length,
-	        min = undefined,
+	        length = array.length;
+	    var min = undefined,
 	        i = undefined,
 	        j = undefined;
 	

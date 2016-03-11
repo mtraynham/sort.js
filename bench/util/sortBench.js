@@ -11,20 +11,18 @@ import * as Sort from '../../index';
  * @return {Benchmark.Suite}
  */
 export default function sortBench (name, array, comparator) {
-    let sorts = merge({
-        'Array.prototype.sort': (arr, comparator) => {
-            arr.sort(comparator);
+    const sorts = merge({
+        'Array.prototype.sort': (arr, compare) => {
+            arr.sort(compare);
             return arr;
         }
     }, Sort);
 
     return {
-        name: name,
-        tests: Object.keys(sorts).map(key => {
-            return {
-                name: key,
-                fn: () => sorts[key](array.slice(), comparator)
-            };
-        })
+        name,
+        tests: Object.keys(sorts).map(key => ({
+            name: key,
+            fn: () => sorts[key](array.slice(), comparator)
+        }))
     };
 }
