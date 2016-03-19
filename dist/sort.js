@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Thu Mar 10 2016 21:49:33 GMT-0500 (EST)
+ *  sort.js - v0.0.1 - Sat Mar 19 2016 09:42:05 GMT-0400 (EDT)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'bubbleSort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_bubbleSort).default;
 	  }
 	});
@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'bubbleSortOptimized', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_bubbleSortOptimized).default;
 	  }
 	});
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'heapSort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_heapSort).default;
 	  }
 	});
@@ -108,7 +108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'insertionSort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_insertionSort).default;
 	  }
 	});
@@ -117,7 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'mergeSort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_mergeSort).default;
 	  }
 	});
@@ -126,7 +126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'mergeSortInplace', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_mergeSortInplace).default;
 	  }
 	});
@@ -135,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'sortingNetworkDualPivotQuicksort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_sortingNetworkDualPivotQuicksort).default;
 	  }
 	});
@@ -144,7 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'dualPivotQuicksort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_dualPivotQuicksort).default;
 	  }
 	});
@@ -153,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_quicksort).default;
 	  }
 	});
@@ -162,7 +162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksortFunctional', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_quicksortFunctional).default;
 	  }
 	});
@@ -171,7 +171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'quicksortInplace', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_quicksortInplace).default;
 	  }
 	});
@@ -180,7 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Object.defineProperty(exports, 'selectionSort', {
 	  enumerable: true,
-	  get: function () {
+	  get: function get() {
 	    return _interopRequireDefault(_selectionSort).default;
 	  }
 	});
@@ -221,8 +221,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
 	    var length = array.length,
-	        i = undefined,
-	        swapped = undefined;
+	        i = void 0,
+	        swapped = void 0;
 	    // Repeat (do-while) until no item is swapped, indicating a sorted array.
 	    do {
 	        swapped = false;
@@ -386,8 +386,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array);
 	    var n = array.length,
-	        i = undefined,
-	        newN = undefined;
+	        i = void 0,
+	        newN = void 0;
 	    do {
 	        // Instead of the swapped boolean flag, we can track the last n item that bubbled to the top.
 	        // Checking if n > 0 will suggest that some portion of the array was swapped
@@ -491,8 +491,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        length = array.length;
-	    var i = undefined,
-	        j = undefined;
+	    var i = void 0,
+	        j = void 0;
 	    for (i = 0; i < length; i++) {
 	        var value = array[i];
 	        for (j = i - 1; j > -1 && lessThan(value, array[j]); j--) {
@@ -593,8 +593,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {undefined}
 	     */
 	    function merge(min, max, mid) {
-	        var i = undefined,
-	            j = undefined;
+	        var i = void 0,
+	            j = void 0;
 	        for (i = min; i < mid; i++) {
 	            if (lessThan(array[mid], array[i])) {
 	                arraySwap(i, mid);
@@ -702,7 +702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            el4 = array[index4],
 	            el5 = array[index5];
 	
-	        var t = undefined;
+	        var t = void 0;
 	
 	        if (comparator(el1, el2) > 0) {
 	            t = el1;
@@ -1116,9 +1116,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lessThan = (0, _comparator.comparatorToLessThan)(comparator),
 	        arraySwap = (0, _arraySwap.arraySwapPartial)(array),
 	        length = array.length;
-	    var min = undefined,
-	        i = undefined,
-	        j = undefined;
+	    var min = void 0,
+	        i = void 0,
+	        j = void 0;
 	
 	    for (i = 0; i < length; i++) {
 	        min = i;
