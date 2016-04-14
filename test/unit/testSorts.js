@@ -40,12 +40,12 @@ function typeSpec (name, chanceFn, comparator = naturalComparator) {
             sortTest(chance.n(chanceFn, 100), reverse(comparator)));
 
         describe('Large Sort', function () {
-            this.timeout(5000);
+            this.timeout(10000);
             return sortTest(chance.n(chanceFn, 1000), comparator);
         });
 
         describe('Reverse Large Sort', function () {
-            this.timeout(5000);
+            this.timeout(10000);
             return sortTest(chance.n(chanceFn, 1000), reverse(comparator));
         });
     });
