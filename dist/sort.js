@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Mon Apr 18 2016 20:41:33 GMT-0400 (EDT)
+ *  sort.js - v0.0.1 - Thu Apr 28 2016 20:52:14 GMT-0400 (EDT)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
@@ -542,19 +542,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    /**
-	     * Merge
+	     * Merge Sort
 	     * @param {Array<*>} mergeArray
 	     * @return {Array<*>}
 	     */
-	    function _mergeSort(mergeArray) {
+	    function mSort(mergeArray) {
 	        if (mergeArray.length <= 1) {
 	            return mergeArray;
 	        }
 	        var mid = Math.floor(mergeArray.length / 2);
-	        return merge(_mergeSort(mergeArray.slice(0, mid)), _mergeSort(mergeArray.slice(mid)));
+	        return merge(mSort(mergeArray.slice(0, mid)), mSort(mergeArray.slice(mid)));
 	    }
 	
-	    return _mergeSort(array);
+	    return mSort(array);
 	}
 	module.exports = exports['default'];
 
@@ -613,7 +613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Number} max
 	     * @return {undefined}
 	     */
-	    function _mergeSort(min, max) {
+	    function mSort(min, max) {
 	        var range = max - min;
 	        if (range === 0) {
 	            return;
@@ -623,12 +623,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        } else {
 	            var mid = Math.floor((min + max) / 2);
-	            _mergeSort(min, mid);
-	            _mergeSort(++mid, max);
+	            mSort(min, mid);
+	            mSort(++mid, max);
 	            merge(min, max, mid);
 	        }
 	    }
-	    _mergeSort(0, array.length - 1);
+	    mSort(0, array.length - 1);
 	    return array;
 	}
 	module.exports = exports['default'];
@@ -790,13 +790,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	        } else {
-	            for (var k = less; k <= great; ++k) {
-	                var ak = array[k],
-	                    comp = comparator(ak, pivot1);
+	            for (var _k = less; _k <= great; ++_k) {
+	                var _ak = array[_k],
+	                    comp = comparator(_ak, pivot1);
 	                if (comp < 0) {
-	                    if (k !== less) {
-	                        array[k] = array[less];
-	                        array[less] = ak;
+	                    if (_k !== less) {
+	                        array[_k] = array[less];
+	                        array[less] = _ak;
 	                    }
 	                    less++;
 	                } else if (comp > 0) {
@@ -804,12 +804,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        great--;
 	                    }
 	                    if (comparator(array[great], pivot1) < 0) {
-	                        array[k] = array[less];
+	                        array[_k] = array[less];
 	                        array[less++] = array[great];
-	                        array[great--] = ak;
+	                        array[great--] = _ak;
 	                    } else {
-	                        array[k] = array[great];
-	                        array[great--] = ak;
+	                        array[_k] = array[great];
+	                        array[great--] = _ak;
 	                    }
 	                }
 	            }
@@ -835,23 +835,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                great--;
 	            }
 	
-	            outer2: for (var k = less; k <= great; k++) {
-	                var ak = array[k];
-	                if (comparator(ak, pivot2) === 0) {
+	            outer2: for (var _k2 = less; _k2 <= great; _k2++) {
+	                var _ak2 = array[_k2];
+	                if (comparator(_ak2, pivot2) === 0) {
 	                    while (comparator(array[great], pivot2) === 0) {
-	                        if (great-- === k) {
+	                        if (great-- === _k2) {
 	                            break outer2;
 	                        }
 	                    }
 	                    if (comparator(array[great], pivot1) === 0) {
-	                        array[k] = array[less];
+	                        array[_k2] = array[less];
 	                        array[less] = pivot1;
 	                    } else {
-	                        array[k] = array[great];
+	                        array[_k2] = array[great];
 	                    }
 	                    array[great--] = pivot2;
-	                } else if (comparator(ak, pivot1) === 0) {
-	                    array[k] = array[less];
+	                } else if (comparator(_ak2, pivot1) === 0) {
+	                    array[_k2] = array[less];
 	                    array[less++] = pivot1;
 	                }
 	            }
@@ -960,7 +960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Array<*>} quicksortArray
 	     * @return {Array<*>}
 	     */
-	    function _quicksort(quicksortArray) {
+	    function qSort(quicksortArray) {
 	        if (quicksortArray.length <= 1) {
 	            return quicksortArray;
 	        }
@@ -978,9 +978,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                right.push(value);
 	            }
 	        }
-	        return concat.call(_quicksort(left), pivot, _quicksort(right));
+	        return concat.call(qSort(left), pivot, qSort(right));
 	    }
-	    return _quicksort(array);
+	    return qSort(array);
 	}
 	module.exports = exports['default'];
 
