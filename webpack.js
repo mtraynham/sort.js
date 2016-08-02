@@ -1,10 +1,10 @@
-import pkg from './package';
 import isArray from 'lodash/isArray';
 import merge from 'lodash/merge';
 import template from 'lodash/template';
 import {readFileSync} from 'fs';
 import {resolve} from 'path';
 import {optimize, BannerPlugin} from 'webpack';
+import pkg from './package';
 
 const banner = template(readFileSync(resolve(__dirname, 'LICENSE_BANNER'), 'utf8'))({
     pkg,
