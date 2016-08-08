@@ -1,5 +1,5 @@
 /*!
- *  sort.js - v0.0.1 - Tue Aug 02 2016 11:42:52 GMT-0400 (EDT)
+ *  sort.js - v0.0.1 - Sun Aug 07 2016 23:14:38 GMT-0400 (EDT)
  *  https://github.com/mtraynham/sort.js.git
  *  Copyright 2015-2016 Matt Traynham <skitch920@gmail.com>
  *
