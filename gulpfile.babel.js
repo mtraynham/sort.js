@@ -49,7 +49,7 @@ gulp.task('coverage', ['lint'], () =>
                 .pipe($.istanbul.writeReports()) // Creating the reports after tests runned
                 .on('end', () =>
                     gulp.src('coverage/lcov.info')
-                        .pipe($.coveralls()))));
+                        .pipe($.codecov({token: '04fd38bd-8b9c-403f-bec5-b19acf0e8fb0'})))));
 
 // Browser Test Tasks
 gulp.task('test-browser-build', ['lint'], () =>
