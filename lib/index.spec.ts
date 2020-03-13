@@ -1,20 +1,24 @@
 import Chance from 'chance';
 import isEqual from 'lodash/isEqual'
 
-import {bubbleSort, bubbleSortOptimized} from './bubbleSort';
-import {heapSort} from './heapSort';
-import {insertionSort} from './insertionSort';
-import {mergeSort, mergeSortInplace} from './mergeSort';
 import {
+    bubbleSort,
+    bubbleSortOptimized,
+    heapSort,
+    insertionSort,
+    mergeSort,
+    mergeSortInplace,
     dualPivotQuicksort,
     quicksort,
     quicksortFunctional,
     quicksortInplace,
-    sortingNetworkDualPivotQuicksort
-} from './quicksort';
-import {selectionSort} from './selectionSort';
-import {Comparator, naturalComparator, reverse} from './util';
-import {Sort} from './typings';
+    sortingNetworkDualPivotQuicksort,
+    selectionSort,
+    Comparator,
+    naturalComparator,
+    reverse,
+    Sort
+} from './index';
 
 const chance: Chance.Chance = new Chance();
 const sorts: {[key: string]: Sort<unknown>} = {

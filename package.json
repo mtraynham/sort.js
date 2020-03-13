@@ -28,12 +28,12 @@
     "scripts": {
         "all": "npm run lint && npm run test && npm run build && npm run benchmark",
         "build": "webpack --config-name dist",
-        "lint": "eslint lib/**/*.ts karma.conf.ts webpack.config.ts",
+        "lint": "eslint benchmark/**/*.ts lib/**/*.ts karma.conf.ts webpack.config.ts",
         "test:browser": "karma start",
         "test:browser:debug": "karma start --single-run=false --browsers Chrome --reporters kjhtml",
         "test:node": "jasmine --require=ts-node/register lib/**/*.spec.ts",
         "test": "npm run test:browser && npm run test:node",
-        "benchmark": "node --require=ts-node/register benchmark/joins.ts",
+        "benchmark": "node --require=ts-node/register benchmark/sort.ts",
         "debug": "webpack-dev-server --open --config-name debug",
         "prepublishOnly": "npm run lint && npm run test && npm run build"
     },

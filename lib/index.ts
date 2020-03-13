@@ -5,3 +5,4 @@ export * from './mergeSort';
 export * from './quicksort';
 export * from './selectionSort';
 export * from './util';
+export * from './typings';
